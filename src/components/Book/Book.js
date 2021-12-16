@@ -1,15 +1,20 @@
 import React from "react";
-import { 
-  HiPlusCircle, 
-  // HiMinusCircle,
-  // HiCheckCircle 
+import {
+  HiCheckCircle,
+  HiMinusCircle,
+  HiPlusCircle,
+
 } from 'react-icons/hi';
+import { useDispatch } from "react-redux";
+import { addToReadingList } from "../../redux/action/bookAction";
 import styles from './book.module.css'
+import { addToFinishedList } from './../../redux/action/bookAction';
 const SingleBook = (props) => {
   const { title, author, coverImageUrl, synopsis } = props.book;
+  const dispatch = useDispatch();
   return (
-    <div className='card d-flex mb-3 p-3' 
-      style={{position: 'relative'}}
+    <div className='card d-flex mb-3 p-3'
+      style={{ position: 'relative' }}
     >
       <div className='row'>
         <div className='col-md-3'>
@@ -24,9 +29,11 @@ const SingleBook = (props) => {
         </div>
       </div>
       <div className={styles.control_icons} >
-        {/* <HiMinusCircle title="Remove from list" className={styles.minus_icon} /> */}
-        <HiPlusCircle title="Add to Reading" className={styles.plus_icon} />
-        {/* <HiCheckCircle title="Mark as Finish" className={styles.check_icon} /> */}
+        <HiMinusCircle title="Remove from list" className={styles.minus_icon} />
+        {
+          <HiPlusCircle onClick={() => dispatch(addToReadingList(props.book))} title="Add to Reading" className={styles.plus_icon} />
+        }
+        <HiCheckCircle onClick={() => dispatch(addToFinishedList(props.book))} title="Mark as Finish" className={styles.check_icon} />
       </div>
     </div>
   );
